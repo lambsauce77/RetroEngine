@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="RetroEngine.vcxproj" Id="c888702e-a830-4c21-b8d3-100856f0cab6" />
+</Solution>
