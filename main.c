@@ -12,6 +12,7 @@ do{ \
 	if(renderer){SDL_DestroyRenderer(renderer);} \
 	if(window){SDL_DestroyWindow(window);} \
 	SDL_Quit(); \
+	alloc_destroy(global_allocator); \
 	return(value); \
 }while(0)
 
@@ -24,7 +25,7 @@ int main(void) {
 	}
 
 	if (SDL_Init(SDL_INIT_VIDEO) != 0) {
-		return 1;
+		QUIT(1, NULL, NULL);
 	}
 
 	SDL_Window* window = SDL_CreateWindow(
@@ -63,7 +64,6 @@ int main(void) {
 		renderer_update();
 	}
 
-	alloc_destroy(global_allocator);
 	renderer_quit();
 	QUIT(0, renderer, window);
 }
