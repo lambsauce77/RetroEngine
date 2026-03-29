@@ -1,8 +1,6 @@
 #ifndef TYPES_H
 #define TYPES_H
 
-#include "include.h"
-
 typedef uint8_t u8;
 typedef uint16_t u16;
 typedef uint32_t u32;
@@ -15,5 +13,9 @@ typedef int64_t i64;
 
 typedef float f32;
 typedef double f64;
+
+#define KiB(n) ((u64)(n) << 10)
+#define MiB(n) ((u64)(n) << 20)
+#define GiB(n) ((u64)(n) << 30)
 
 #endif

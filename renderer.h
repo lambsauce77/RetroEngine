@@ -1,7 +1,7 @@
 #ifndef RENDERER_H
 #define RENDERER_H
 
-#include "types.h"
+#include "include.h"
 
 u8 renderer_init(SDL_Renderer*, u32 w, u32 h);
 void renderer_update(void);

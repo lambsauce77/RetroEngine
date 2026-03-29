@@ -8,4 +8,7 @@
 
 #include <SDL2/SDL.h>
 
+#include "types.h"
+#include "util.h"
+
 #endif

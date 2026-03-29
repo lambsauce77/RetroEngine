@@ -1,9 +1,11 @@
 #include "include.h"
-#include "types.h"
 #include "renderer.h"
+#include "allocator.h"
 
 #define WINDOW_W 1280
 #define WINDOW_H 720
+
+#define GLOBAL_MEMORY (MiB(100))
 
 #define QUIT(value, renderer, window) \
 do{ \
@@ -14,6 +16,12 @@ do{ \
 }while(0)
 
 int main(void) {
+
+	global_allocator = alloc_create(GLOBAL_MEMORY);
+
+	if (!global_allocator) {
+		QUIT(1, NULL, NULL);
+	}
 
 	if (SDL_Init(SDL_INIT_VIDEO) != 0) {
 		return 1;
@@ -55,6 +63,7 @@ int main(void) {
 		renderer_update();
 	}
 
+	alloc_destroy(global_allocator);
 	renderer_quit();
 	QUIT(0, renderer, window);
 }
