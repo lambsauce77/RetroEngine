@@ -15,7 +15,7 @@ alloc_t* alloc_create(u64 cap) {
 
 void* alloc_push(alloc_t* a, u64 size){
 	if (!a) {
-		printf("Allocation error! Arena is null.\n");
+		printf("Allocation error! Allocator is null\n");
 		return NULL;
 	}
 
@@ -24,7 +24,7 @@ void* alloc_push(alloc_t* a, u64 size){
 
 	if (new_pos > a->capacity) {
 		// alloc failure
-		printf("Allocation error! Memory out of range.\n");
+		printf("Allocation error! Memory out of range\n");
 		return NULL;
 	}
 
@@ -35,7 +35,7 @@ void* alloc_push(alloc_t* a, u64 size){
 	// maybe opt.
 	memset(out, 0, size);
 
-	printf("Allocated %llu bytes.\n", size);
+	printf("Allocated %llu bytes\n", size);
 
 	return out;
 }
@@ -62,6 +62,8 @@ void alloc_clear(alloc_t* a) {
 
 void alloc_destroy(alloc_t* a){
 	ASSERT(VOID, a);
+
+	printf("Freed %llu bytes\n", (a->position - ALLOC_START));
 
 	free(a);
 }

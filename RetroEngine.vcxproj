@@ -131,12 +131,14 @@
     <ClCompile Include="gfx.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="renderer.c" />
+    <ClCompile Include="scene.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="allocator.h" />
     <ClInclude Include="gfx.h" />
     <ClInclude Include="include.h" />
     <ClInclude Include="renderer.h" />
+    <ClInclude Include="scene.h" />
     <ClInclude Include="types.h" />
     <ClInclude Include="util.h" />
   </ItemGroup>

@@ -1,5 +1,6 @@
 #include "renderer.h"
 #include "allocator.h"
+#include "scene.h"
 
 alloc_t* buffer_allocator = NULL;
 
@@ -17,6 +18,21 @@ u32* back_buffer = NULL;
 #define BUFFER_SIZE (PIXEL_COUNT * sizeof(u32))
 
 #define ALLOC_SIZE (BUFFER_SIZE*3)
+
+static void clear_frame(void) {
+	SDL_RenderClear(renderer);
+	memset(back_buffer, 0, BUFFER_SIZE);
+}
+
+static void render_frame(void) {
+	if (cur_scene_idx < active_scene_count && cur_scene_idx >= 0) {
+		scene_render(active_scenes[cur_scene_idx]);
+	}
+}
+
+static void swap_buffers(void) {
+	memcpy(front_buffer, back_buffer, BUFFER_SIZE);
+}
 
 u8 renderer_init(SDL_Renderer* r, u32 w, u32 h) {
 	ASSERT(0, r);
@@ -36,7 +52,11 @@ u8 renderer_init(SDL_Renderer* r, u32 w, u32 h) {
 	front_buffer = (u32*)alloc_push(buffer_allocator, BUFFER_SIZE);
 	back_buffer = (u32*)alloc_push(buffer_allocator, BUFFER_SIZE);
 
-	ASSERT(0, front_buffer && back_buffer);
+	if (!front_buffer || !back_buffer) {
+		SDL_DestroyTexture(render_tex);
+		alloc_destroy(buffer_allocator);
+		return 0;
+	}
 
 	renderer = r;
 	return 1;
@@ -44,15 +64,12 @@ u8 renderer_init(SDL_Renderer* r, u32 w, u32 h) {
 
 void renderer_update() {
 	ASSERT(VOID, renderer && render_tex);
+
+	clear_frame();
+
+	render_frame();
 	
-	SDL_RenderClear(renderer);
-
-	memset(back_buffer, 0, BUFFER_SIZE);
-
-	// render logic
-	//
-
-	memcpy(front_buffer, back_buffer, BUFFER_SIZE);
+	swap_buffers();
 
 	u32* pixels = NULL;
 	int pitch = 0;
